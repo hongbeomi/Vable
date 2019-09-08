@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+                <android.support.v7.widget.SearchView
+                        android:inputType="text"
+                        android:id="@+id/searchView"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:imeOptions="actionSearch"
+                        android:layout_marginTop="8dp"
+                        app:queryHint="검색어를 입력해주세요"
+                        app:iconifiedByDefault="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        app:queryBackground="@android:color/white"
+                        android:background="@android:color/white"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:elevation="2dp">
+                </android.support.v7.widget.SearchView>
+
+
+
+            <LinearLayout
+            android:id="@+id/volunteerItemSearchLayout"
+            android:orientation="vertical"
+            android:layout_marginTop="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/searchRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+</FrameLayout>

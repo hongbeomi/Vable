@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/search_menu"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="검색" />
+
+    <item
+        android:id="@+id/recommend_menu"
+        android:icon="@drawable/ic_star_border_black_24dp"
+        android:title="추천" />
+
+    <item
+        android:id="@+id/information_menu"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="나의 정보" />
+
+</menu>
