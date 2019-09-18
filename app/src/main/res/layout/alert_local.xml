@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:paddingBottom="16dp"
-              android:paddingTop="16dp">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/line"/>
+            android:background="@color/line" />
 
     <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_height="wrap_content">
-        <Spinner
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/localChangeSpinner"
-                android:spinnerMode="dropdown"
-                android:dropDownWidth="120dp"/>
+            android:orientation="horizontal">
 
         <Spinner
-                android:layout_marginStart="16dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
+                android:id="@+id/localChangeSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:dropDownWidth="120dp"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
+
+        <Spinner
                 android:id="@+id/subLocalChangeSpinner"
-                android:spinnerMode="dropdown"
-                android:dropDownWidth="136dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:dropDownWidth="136dp"
+                android:gravity="center"
+                android:spinnerMode="dropdown" />
     </LinearLayout>
 </LinearLayout>

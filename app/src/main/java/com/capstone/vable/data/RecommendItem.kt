@@ -5,6 +5,5 @@ data class RecommendItem(
   var recommendGender: String = "",
   var recommendLocal: String = "",
   var recommendSubLocal: String = "",
-  var recommendDescription: String = "",
-  val recommendType: String = ""
+  var recommendDescription: String = ""
 )

@@ -2,7 +2,7 @@ package com.capstone.vable.activity
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import java.security.MessageDigest
 
 

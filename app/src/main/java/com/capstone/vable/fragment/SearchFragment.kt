@@ -1,9 +1,9 @@
 package com.capstone.vable.fragment
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.SearchView
 import android.util.Log
 import com.capstone.vable.dto.ResponseVolunteersDTO
 import com.capstone.vable.data.SearchItem
@@ -36,8 +36,8 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
     , savedInstanceState: Bundle?
   ): View? {
     val view = inflater.inflate(R.layout.search_fragment, null)
-    val recyclerView = view.findViewById<RecyclerView>(R.id.searchRecyclerView)
-    val linearLayoutManager = LinearLayoutManager(context)
+    val recyclerView = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.searchRecyclerView)
+    val linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
     recyclerView.apply {
       layoutManager = linearLayoutManager
       adapter = recyclerAdapter
@@ -120,8 +120,7 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
         response.body()?.get(i)?.gender.toString(),
         response.body()?.get(i)?.location.toString(),
         response.body()?.get(i)?.sub_location.toString(),
-        response.body()?.get(i)?.contents.toString().replace(" ", "\u00A0"),
-        response.body()?.get(i)?.type.toString()
+        response.body()?.get(i)?.contents.toString().replace(" ", "\u00A0")
       )
     )
     println(response.body()?.get(i)?.title.toString())

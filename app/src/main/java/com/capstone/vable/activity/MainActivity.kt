@@ -1,10 +1,10 @@
 package com.capstone.vable.activity
 
 import android.annotation.SuppressLint
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.fragment.app.Fragment
 import android.view.MenuItem
 import com.capstone.vable.fragment.InformationFragment
 import com.capstone.vable.R
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
   }
 
   @SuppressLint("PrivateResource")
-  private fun setTransaction(fragment: Fragment) {
+  private fun setTransaction(fragment: androidx.fragment.app.Fragment) {
     supportFragmentManager.beginTransaction()
       .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
       .addToBackStack(null)

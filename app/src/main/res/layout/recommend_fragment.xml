@@ -1,65 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+        android:layout_height="match_parent">
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
         <LinearLayout
-                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
             <TextView
-                    tools:text="이름"
-                    android:background="@android:color/transparent"
                     android:id="@+id/recommendNameEditText"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:text="님에게 추천드리는 봉사활동"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/logInText"
+                    android:background="@android:color/transparent"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                   />
+                    android:textColor="@android:color/black"
+                    tools:text="이름"/>
+
+            <TextView
+                    android:id="@+id/logInText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="님에게 추천드리는 봉사활동"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         </LinearLayout>
 
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipeLayout"
-                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp">
 
             <LinearLayout
                     android:id="@+id/volunteerItemLayout"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recommendRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 

@@ -1,101 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.card.MaterialCardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
         android:id="@+id/searchCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="2dp"
-        android:layout_height="wrap_content">
+        android:layout_marginEnd="8dp">
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             android:orientation="vertical">
+
         <TextView
                 android:id="@+id/searchTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                tools:text="제목"
-                android:textColor="@android:color/black"
-                android:gravity="left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                tools:text="제목" />
 
         <LinearLayout
                 android:id="@+id/searchGenderLayout"
-                android:layout_marginTop="16dp"
-                android:layout_below="@id/searchTitleTextView"
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/searchTitleTextView"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
 
             <TextView
                     android:id="@+id/searchGenderTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:gravity="center"
-                    tools:text="성별"/>
+                    android:textSize="16sp"
+                    tools:text="성별" />
 
             <!--<View-->
-                    <!--android:layout_width="1dp"-->
-                    <!--android:layout_marginStart="8dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:background="@android:color/black"-->
-                    <!--/>-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@android:color/black"-->
+            <!--/>-->
 
             <TextView
                     android:id="@+id/searchLocalTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:layout_marginStart="8dp"
-                    tools:text="지역"/>
+                    android:textSize="16sp"
+                    tools:text="지역" />
 
             <TextView
                     android:id="@+id/searchSubLocalTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="세부 지역"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:layout_marginStart="8dp"/>
-
-            <TextView
-                    android:id="@+id/searchTypeTextView"
-                    tools:text="봉사종류"
-                    android:textSize="16sp"
-                    android:gravity="center"
                     android:layout_marginStart="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    tools:text="세부 지역" />
+
+            <!--            <TextView-->
+            <!--                    android:id="@+id/searchTypeTextView"-->
+            <!--                    tools:text="봉사종류"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:layout_marginStart="8dp"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"/>-->
         </LinearLayout>
 
 
         <LinearLayout
+                android:id="@+id/searchDescriptionLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_below="@id/searchGenderLayout"
-                android:id="@+id/searchDescriptionLayout"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
 
 
-                <TextView
-                        android:textColor="@android:color/black"
-                        android:scrollbars="vertical"
-                        android:id="@+id/searchDescriptionTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="내용"
-                        android:lineSpacingExtra="8dp"
-                        android:textSize="16sp"/>
+            <TextView
+                    android:id="@+id/searchDescriptionTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="8dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:text="내용" />
         </LinearLayout>
 
     </RelativeLayout>
 
-</android.support.design.card.MaterialCardView>
+</com.google.android.material.card.MaterialCardView>

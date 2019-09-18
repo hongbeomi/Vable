@@ -20,7 +20,6 @@ class SharedPreferences(context: Context) {
     get() = prefs?.getString(id, "").toString()
     set(value) = prefs?.edit()?.putString(id, value)?.apply()!!
 
-
   var myId: String
     get() = prefs?.getString(user_id, "").toString()
     set(value) = prefs?.edit()?.putString(user_id, value)?.apply()!!

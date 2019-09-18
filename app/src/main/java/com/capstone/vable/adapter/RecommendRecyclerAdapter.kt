@@ -1,8 +1,8 @@
 package com.capstone.vable.adapter
 
 import android.animation.ValueAnimator
-import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.method.ScrollingMovementMethod
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.recommend_item.view.*
 import java.util.ArrayList
 
 class RecommendRecyclerAdapter(private val recommendList: ArrayList<RecommendItem>) :
-  RecyclerView.Adapter<RecommendRecyclerAdapter.ViewHolder>() , View.OnTouchListener {
+  androidx.recyclerview.widget.RecyclerView.Adapter<RecommendRecyclerAdapter.ViewHolder>() , View.OnTouchListener {
 
   val selectedItems = SparseBooleanArray()
   var prePosition = -1
@@ -40,9 +40,9 @@ class RecommendRecyclerAdapter(private val recommendList: ArrayList<RecommendIte
     holder.bindItems(recommendList[position])
   }
 
-  inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+  inner class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view), View.OnClickListener {
 
-    private val cardView = itemView.findViewById<CardView>(R.id.recommendCardView)
+    private val cardView = itemView.findViewById<androidx.cardview.widget.CardView>(R.id.recommendCardView)
     private val descriptionLayout =
       itemView.findViewById<LinearLayout>(R.id.recommendDescriptionLayout)
 
@@ -88,7 +88,6 @@ class RecommendRecyclerAdapter(private val recommendList: ArrayList<RecommendIte
         recommendLocalTextView.text = data.recommendLocal
         recommendSubLocalTextView.text = data.recommendSubLocal
         recommendDescriptionTextView.text = data.recommendDescription
-        recommendTypeTextView.text = data.recommendType
       }
       changeVisibility(selectedItems.get(adapterPosition))
       cardView.setOnClickListener(this)

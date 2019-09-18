@@ -2,9 +2,13 @@ package com.capstone.vable.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.Toast
+import androidx.biometric.BiometricPrompt
 import com.capstone.vable.*
 import com.capstone.vable.controller.BackPressCloseHandler
 import com.capstone.vable.dto.ResponseLogInDTO
@@ -17,6 +21,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.capstone.vable.preferencesdata.App
 import com.capstone.vable.service.LogInService
+import androidx.biometric.BiometricConstants.ERROR_NEGATIVE_BUTTON
+import com.capstone.vable.controller.MainThreadExecutor
 
 
 class LoginActivity : BaseActivity() {
@@ -25,18 +31,64 @@ class LoginActivity : BaseActivity() {
     .build()
     .create(LogInService::class.java)
   private var backPressCloseHandler: BackPressCloseHandler? = null
+  private var fingerId: String = ""
+  private var fingerPassword: String = ""
+
+  private var biometricPrompt: BiometricPrompt? = null
+  private val executor = MainThreadExecutor()
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_login)
     backPressCloseHandler = BackPressCloseHandler(this)
 
-    if (App.prefs.myId != "") {
-      startActivity<MainActivity>()
-      finish()
+//    if (App.prefs.myId != "") {
+//      startActivity<MainActivity>()
+//      finish()
+//    }
+    if (biometricPrompt == null) {
+      biometricPrompt = BiometricPrompt(this, executor, callback)
+    }
+
+    fingerId = App.prefs.myId
+    fingerPassword = App.prefs.myPass
+    if (fingerId != "" && fingerPassword != "") {
+      val promptInfo = buildBiometricPrompt()
+      biometricPrompt!!.authenticate(promptInfo)
     }
     goRegister()
     logIn()
+  }
+
+  // 지문 인지 콜백 함수
+  private val callback = object : BiometricPrompt.AuthenticationCallback() {
+    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+      super.onAuthenticationError(errorCode, errString)
+      if (errorCode == ERROR_NEGATIVE_BUTTON && biometricPrompt != null)
+        biometricPrompt!!.cancelAuthentication()
+
+    }
+
+    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+      super.onAuthenticationSucceeded(result)
+      logInIdInputEditText.setText(fingerId)
+      logInPassInputEditText.setText(fingerPassword)
+
+    }
+
+    override fun onAuthenticationFailed() {
+      super.onAuthenticationFailed()
+    }
+  }
+
+  // 지문인식 로그인
+  private fun buildBiometricPrompt(): BiometricPrompt.PromptInfo {
+      return BiometricPrompt.PromptInfo.Builder()
+        .setTitle("지문 로그인")
+        .setDescription("손가락을 센서에 올려주세요.")
+        .setNegativeButtonText("취소")
+        .build()
   }
 
   // 로그인 구현
@@ -49,8 +101,11 @@ class LoginActivity : BaseActivity() {
         toast("통신 실패")
         hideProgress()
       }
-      override fun onResponse(call: Call<List<ResponseLogInDTO>>,
-                              response: Response<List<ResponseLogInDTO>>) {
+
+      override fun onResponse(
+        call: Call<List<ResponseLogInDTO>>,
+        response: Response<List<ResponseLogInDTO>>
+      ) {
         try {
           if (response.body()?.get(0)?.password.toString().trim() ==
             sha256(logInPassInputEditText.text.toString().trim())
@@ -59,7 +114,8 @@ class LoginActivity : BaseActivity() {
             App.prefs.apply {
               myKey = response.body()?.get(0)?.id.toString().trim()
               myId = response.body()?.get(0)?.user_id.toString().trim()
-              myPass = response.body()?.get(0)?.password.toString().trim()
+//              myPass = response.body()?.get(0)?.password.toString().trim()
+              myPass = logInPassInputEditText.text.toString()
               myName = response.body()?.get(0)?.name.toString().trim()
               myGender = response.body()?.get(0)?.gender.toString().trim()
               myType = response.body()?.get(0)?.priority_volunteer.toString().trim()
@@ -105,10 +161,6 @@ class LoginActivity : BaseActivity() {
           toast("비밀번호를 입력하세요")
         }
         else -> {
-//          loginData.apply {
-//            user_id = logInIdInputEditText.text.toString()
-//            password = sha256(logInPassInputEditText.text.toString())
-//          }
           getCheckInformation(logInIdInputEditText.text.toString())
         }
       }
@@ -122,6 +174,7 @@ class LoginActivity : BaseActivity() {
       override fun afterTextChanged(s: Editable?) {
         checkLoginDataIsNull()
       }
+
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
       override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     })
@@ -130,6 +183,7 @@ class LoginActivity : BaseActivity() {
       override fun afterTextChanged(s: Editable?) {
         checkLoginDataIsNull()
       }
+
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
       override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     })
@@ -139,14 +193,17 @@ class LoginActivity : BaseActivity() {
   @SuppressLint("ResourceAsColor", "PrivateResource")
   private fun checkLoginDataIsNull() {
     if (logInIdInputEditText.text.toString() == ""
-      || logInPassInputEditText.text.toString() == "")
-    { logInButton.setBackgroundResource(R.color.mtrl_btn_bg_color_disabled) }
-    else {
+      || logInPassInputEditText.text.toString() == ""
+    ) {
+      logInButton.setBackgroundResource(R.color.mtrl_btn_bg_color_disabled)
+    } else {
       logInButton.setBackgroundResource(R.drawable.ripple_custom_login_button)
     }
   }
 
   // 뒤로가기 버튼
-  override fun onBackPressed() { backPressCloseHandler?.onBackPressed() }
+  override fun onBackPressed() {
+    backPressCloseHandler?.onBackPressed()
+  }
 
 }

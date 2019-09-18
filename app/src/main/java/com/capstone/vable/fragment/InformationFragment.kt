@@ -3,7 +3,7 @@ package com.capstone.vable.fragment
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.design.widget.TextInputLayout
+import com.google.android.material.textfield.TextInputLayout
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +20,7 @@ import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
@@ -55,7 +55,7 @@ class InformationFragment : BaseFragment() {
   private fun logOut(view: View) {
     val logOutButton = view.findViewById<Button>(R.id.logOutButton)
     logOutButton?.setOnClickListener {
-      informationClear()
+//      informationClear()
       toast("로그아웃되었습니다.")
       startActivity<LoginActivity>()
     }
@@ -243,7 +243,7 @@ class InformationFragment : BaseFragment() {
       val changePasswordLayout = mView.findViewById<TextInputLayout>(R.id.changePasswordLayout)
 
       builder.apply {
-        setTitle("변경할 비밀번호를 입력해해주세요")
+        setTitle("변경할 비밀번호를 입력해주세요")
         setPositiveButton("변경하기") { _, _ -> }
       }
       setDialogNegativeListener()

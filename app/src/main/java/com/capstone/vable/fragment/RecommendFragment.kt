@@ -3,9 +3,9 @@ package com.capstone.vable.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -44,12 +44,12 @@ class RecommendFragment : BaseFragment() {
   }
 
   private fun requestSwipeRefresh(view: View) {
-    val recyclerView = view.findViewById<RecyclerView>(R.id.recommendRecyclerView)
-    val linearLayoutManager = LinearLayoutManager(context)
+    val recyclerView = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recommendRecyclerView)
+    val linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
     recyclerView.layoutManager = linearLayoutManager
     recyclerView.adapter = recyclerAdapter
     setRecommendName(view)
-    val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)
+    val swipeRefreshLayout = view.findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.swipeLayout)
     swipeRefreshLayout.setOnRefreshListener {
       Handler().postDelayed({
         swipeRefreshLayout.isRefreshing = false
@@ -83,8 +83,7 @@ class RecommendFragment : BaseFragment() {
                 response.body()?.get(i)?.gender.toString(),
                 response.body()?.get(i)?.location.toString(),
                 response.body()?.get(i)?.sub_location.toString(),
-                response.body()?.get(i)?.contents.toString(),
-                response.body()?.get(i)?.type.toString()
+                response.body()?.get(i)?.contents.toString()
               )
             )
           }
