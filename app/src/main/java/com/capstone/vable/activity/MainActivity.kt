@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.fragment.app.Fragment
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import com.capstone.vable.fragment.InformationFragment
 import com.capstone.vable.R
 import com.capstone.vable.controller.BackPressCloseHandler
-import com.capstone.vable.data.LocationData
 import com.capstone.vable.fragment.RecommendFragment
 import com.capstone.vable.fragment.SearchFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
   }
 
   @SuppressLint("PrivateResource")
-  private fun setTransaction(fragment: androidx.fragment.app.Fragment) {
+  private fun setTransaction(fragment: Fragment) {
     supportFragmentManager.beginTransaction()
       .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
       .addToBackStack(null)

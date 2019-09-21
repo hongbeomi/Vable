@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.search_item.view.*
 import java.util.ArrayList
 
 class SearchRecyclerAdapter(private val searchList: ArrayList<SearchItem>) :
-  androidx.recyclerview.widget.RecyclerView.Adapter<SearchRecyclerAdapter.ViewHolder>(), View.OnTouchListener {
+  RecyclerView.Adapter<SearchRecyclerAdapter.ViewHolder>(), View.OnTouchListener {
 
   val selectedItems = SparseBooleanArray()
   var prePosition = -1
@@ -41,9 +41,9 @@ class SearchRecyclerAdapter(private val searchList: ArrayList<SearchItem>) :
   }
 
 
-  inner class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view), View.OnClickListener {
+  inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-    private val cardView = itemView.findViewById<androidx.cardview.widget.CardView>(R.id.searchCardView)
+    private val cardView = itemView.findViewById<CardView>(R.id.searchCardView)
     private val descriptionLayout =
       itemView.findViewById<LinearLayout>(R.id.searchDescriptionLayout)
 

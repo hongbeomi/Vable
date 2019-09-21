@@ -36,8 +36,8 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
     , savedInstanceState: Bundle?
   ): View? {
     val view = inflater.inflate(R.layout.search_fragment, null)
-    val recyclerView = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.searchRecyclerView)
-    val linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+    val recyclerView = view.findViewById<RecyclerView>(R.id.searchRecyclerView)
+    val linearLayoutManager = LinearLayoutManager(context)
     recyclerView.apply {
       layoutManager = linearLayoutManager
       adapter = recyclerAdapter
@@ -64,16 +64,21 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
         call: Call<List<ResponseVolunteersDTO>>,
         response: Response<List<ResponseVolunteersDTO>>
       ) {
-        try {
-          val size = response.body()?.size?.minus(1)
-          for (i in 0..size!!) {
-            addSearchList(i, response)
+        if (response.isSuccessful) {
+          try {
+            val size = response.body()?.size?.minus(1)
+            for (i in 0..size!!) {
+              addSearchList(i, response)
+            }
+            recyclerAdapter.notifyDataSetChanged()
+          } catch (e: Exception) {
+            e.printStackTrace()
+            toast("봉사 정보 불러오기 오류")
+          } finally {
+            hideProgress()
           }
-          recyclerAdapter.notifyDataSetChanged()
-        } catch (e: Exception) {
-          e.printStackTrace()
-          toast("봉사 정보 불러오기 실패")
-        } finally {
+        } else {
+          toast("통신 실패")
           hideProgress()
         }
       }
@@ -95,17 +100,22 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
         call: Call<List<ResponseVolunteersDTO>>,
         response: Response<List<ResponseVolunteersDTO>>
       ) {
-        try {
-          val size = response.body()?.size?.minus(1)
-          searchList.clear()
-          for (i in 0..size!!) {
-            addSearchList(i, response)
-            recyclerAdapter.notifyDataSetChanged()
+        if (response.isSuccessful) {
+          try {
+            val size = response.body()?.size?.minus(1)
+            searchList.clear()
+            for (i in 0..size!!) {
+              addSearchList(i, response)
+              recyclerAdapter.notifyDataSetChanged()
+            }
+          } catch (e: Exception) {
+            toast("검색 결과가 존재하지 않습니다.")
+            getSearchInformation()
+          } finally {
+            hideProgress()
           }
-        } catch (e: Exception) {
-          toast("검색 결과가 존재하지 않습니다.")
-          getSearchInformation()
-        } finally {
+        } else {
+          toast("통신 실패")
           hideProgress()
         }
       }

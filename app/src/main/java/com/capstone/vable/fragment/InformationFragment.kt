@@ -15,8 +15,8 @@ import com.capstone.vable.preferencesdata.App
 import com.capstone.vable.service.InformationService
 import com.capstone.vable.service.NetRetrofit
 import kotlinx.android.synthetic.main.information_fragment.view.*
-import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.support.v4.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,6 +48,7 @@ class InformationFragment : BaseFragment() {
     setUserInformation(view)
     updateTypeButtonListener(view)
     updateLocalButtonListener(view)
+    updateCheckFingerPrint(view)
     updatePasswordButtonListener(view)
     return view
   }
@@ -55,7 +56,7 @@ class InformationFragment : BaseFragment() {
   private fun logOut(view: View) {
     val logOutButton = view.findViewById<Button>(R.id.logOutButton)
     logOutButton?.setOnClickListener {
-//      informationClear()
+      //      informationClear()
       toast("로그아웃되었습니다.")
       startActivity<LoginActivity>()
     }
@@ -76,13 +77,18 @@ class InformationFragment : BaseFragment() {
           call: Call<ResponseInformationDTO>,
           response: Response<ResponseInformationDTO>
         ) {
-          try {
-            toast("변경되었습니다")
-            setUserInformation(view)
-          } catch (e: Exception) {
-            e.printStackTrace()
-            toast("사용자 정보 불러오기 실패")
-          } finally {
+          if (response.isSuccessful) {
+            try {
+              toast("변경되었습니다")
+              setUserInformation(view)
+            } catch (e: Exception) {
+              e.printStackTrace()
+              toast("변경 실패")
+            } finally {
+              hideProgress()
+            }
+          } else {
+            toast("사용자 정보 통신 실패")
             hideProgress()
           }
         }
@@ -108,13 +114,18 @@ class InformationFragment : BaseFragment() {
           call: Call<ResponseInformationDTO>,
           response: Response<ResponseInformationDTO>
         ) {
-          try {
-            toast("변경되었습니다")
-            setUserInformation(view)
-          } catch (e: Exception) {
-            e.printStackTrace()
-            toast("사용자 정보 불러오기 실패")
-          } finally {
+          if (response.isSuccessful) {
+            try {
+              toast("변경되었습니다")
+              setUserInformation(view)
+            } catch (e: Exception) {
+              e.printStackTrace()
+              toast("변경 실패")
+            } finally {
+              hideProgress()
+            }
+          } else {
+            toast("사용자 정보 통신 실패")
             hideProgress()
           }
         }
@@ -136,14 +147,19 @@ class InformationFragment : BaseFragment() {
           call: Call<ResponseInformationDTO>,
           response: Response<ResponseInformationDTO>
         ) {
-          try {
-            println(response.body()?.password.toString().trim())
-            App.prefs.myPass = response.body()?.password.toString().trim()
-            toast("변경되었습니다")
-          } catch (e: Exception) {
-            e.printStackTrace()
-            toast("비밀번호 변경 실패")
-          } finally {
+          if (response.isSuccessful) {
+            try {
+              println(response.body()?.password.toString().trim())
+              App.prefs.myPass = response.body()?.password.toString().trim()
+              toast("변경되었습니다")
+            } catch (e: Exception) {
+              e.printStackTrace()
+              toast("비밀번호 변경 실패")
+            } finally {
+              hideProgress()
+            }
+          } else {
+            toast("비밀번호 변경 통신 실패")
             hideProgress()
           }
         }
@@ -210,6 +226,7 @@ class InformationFragment : BaseFragment() {
           subLocalAdapter.setDropDownViewResource(R.layout.dropdown_item)
           subLocalSpinner.adapter = subLocalAdapter
         }
+
         override fun onNothingSelected(parent: AdapterView<*>?) {}
       }
       builder.setPositiveButton("변경하기") { dialog: DialogInterface?, _ ->
@@ -230,6 +247,14 @@ class InformationFragment : BaseFragment() {
       }
       setDialogNegativeListener()
       setShowDialog(mView)
+    }
+  }
+
+  private fun updateCheckFingerPrint(view: View) {
+    val fingerPrintSwitch = view.findViewById<Switch>(R.id.fingerPrintSwitch)
+    fingerPrintSwitch.isChecked = App.prefs.myFingerPrintstate
+    fingerPrintSwitch?.setOnCheckedChangeListener { _, isChecked ->
+      App.prefs.myFingerPrintstate = isChecked
     }
   }
 
@@ -296,17 +321,17 @@ class InformationFragment : BaseFragment() {
     return builder.toString()
   }
 
-  private fun informationClear() {
-    App.prefs.apply {
-      myKey = ""
-      myId = ""
-      myPass = ""
-      myGender = ""
-      myType = ""
-      myLocal = ""
-      mySubLocal = ""
-    }
-  }
+//  private fun informationClear() {
+//    App.prefs.apply {
+//      myKey = ""
+//      myId = ""
+//      myPass = ""
+//      myGender = ""
+//      myType = ""
+//      myLocal = ""
+//      mySubLocal = ""
+//    }
+//  }
 
   private fun setUserInformation(view: View) {
     view.informationIdTextView.text = App.prefs.myId

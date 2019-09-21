@@ -1,13 +1,13 @@
 package com.capstone.vable.activity
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.Toast
+import android.view.View
+import androidx.biometric.BiometricConstants.*
 import androidx.biometric.BiometricPrompt
 import com.capstone.vable.*
 import com.capstone.vable.controller.BackPressCloseHandler
@@ -21,7 +21,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.capstone.vable.preferencesdata.App
 import com.capstone.vable.service.LogInService
-import androidx.biometric.BiometricConstants.ERROR_NEGATIVE_BUTTON
 import com.capstone.vable.controller.MainThreadExecutor
 
 
@@ -31,12 +30,8 @@ class LoginActivity : BaseActivity() {
     .build()
     .create(LogInService::class.java)
   private var backPressCloseHandler: BackPressCloseHandler? = null
-  private var fingerId: String = ""
-  private var fingerPassword: String = ""
-
   private var biometricPrompt: BiometricPrompt? = null
   private val executor = MainThreadExecutor()
-
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -51,38 +46,43 @@ class LoginActivity : BaseActivity() {
       biometricPrompt = BiometricPrompt(this, executor, callback)
     }
 
-    fingerId = App.prefs.myId
-    fingerPassword = App.prefs.myPass
-    if (fingerId != "" && fingerPassword != "") {
+    fingerPrintLogin()
+    goRegister()
+    logIn()
+  }
+
+  // 기존 로그인 정보가 있다면 지문 인식 on
+  private fun fingerPrintLogin() {
+    if (App.prefs.myId != "" && App.prefs.myPass != "" && App.prefs.myFingerPrintstate) {
+      loginLayout.visibility = View.INVISIBLE
+      fingerprintLayout.visibility = View.VISIBLE
       val promptInfo = buildBiometricPrompt()
       biometricPrompt!!.authenticate(promptInfo)
     }
-    goRegister()
-    logIn()
   }
 
   // 지문 인지 콜백 함수
   private val callback = object : BiometricPrompt.AuthenticationCallback() {
     override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
       super.onAuthenticationError(errorCode, errString)
-      if (errorCode == ERROR_NEGATIVE_BUTTON && biometricPrompt != null)
+      if ((errorCode == ERROR_NEGATIVE_BUTTON || errorCode == ERROR_USER_CANCELED ||
+            errorCode == ERROR_TIMEOUT) && biometricPrompt != null) {
         biometricPrompt!!.cancelAuthentication()
-
+        fingerprintLayout.visibility = View.INVISIBLE
+        loginLayout.visibility = View.VISIBLE
+      }
     }
 
     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
       super.onAuthenticationSucceeded(result)
-      logInIdInputEditText.setText(fingerId)
-      logInPassInputEditText.setText(fingerPassword)
-
+      logInIdInputEditText.setText(App.prefs.myId)
+      logInPassInputEditText.setText(App.prefs.myPass)
+      getCheckInformation(App.prefs.myId)
     }
 
-    override fun onAuthenticationFailed() {
-      super.onAuthenticationFailed()
-    }
   }
 
-  // 지문인식 로그인
+  // 지문 Dialog 구현
   private fun buildBiometricPrompt(): BiometricPrompt.PromptInfo {
       return BiometricPrompt.PromptInfo.Builder()
         .setTitle("지문 로그인")
@@ -114,7 +114,6 @@ class LoginActivity : BaseActivity() {
             App.prefs.apply {
               myKey = response.body()?.get(0)?.id.toString().trim()
               myId = response.body()?.get(0)?.user_id.toString().trim()
-//              myPass = response.body()?.get(0)?.password.toString().trim()
               myPass = logInPassInputEditText.text.toString()
               myName = response.body()?.get(0)?.name.toString().trim()
               myGender = response.body()?.get(0)?.gender.toString().trim()

@@ -14,6 +14,7 @@ class SharedPreferences(context: Context) {
   private val type = "myType"
   private val local = "myLocal"
   private val subLocal = "mySubLocal"
+  private val checkFingerPrint = "myFingerPrintState"
   private val prefs: SharedPreferences? = context.getSharedPreferences(p, 0)
 
   var myKey: String
@@ -47,5 +48,9 @@ class SharedPreferences(context: Context) {
   var mySubLocal: String
     get() = prefs?.getString(subLocal, "").toString()
     set(value) = prefs?.edit()?.putString(subLocal, value)?.apply()!!
+
+  var myFingerPrintstate: Boolean
+  get() = prefs?.getBoolean(checkFingerPrint, true)!!
+  set(value) = prefs?.edit()?.putBoolean(checkFingerPrint, value)?.apply()!!
 
 }

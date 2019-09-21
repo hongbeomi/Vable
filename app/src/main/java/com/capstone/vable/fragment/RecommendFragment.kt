@@ -44,12 +44,12 @@ class RecommendFragment : BaseFragment() {
   }
 
   private fun requestSwipeRefresh(view: View) {
-    val recyclerView = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recommendRecyclerView)
-    val linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+    val recyclerView = view.findViewById<RecyclerView>(R.id.recommendRecyclerView)
+    val linearLayoutManager = LinearLayoutManager(context)
     recyclerView.layoutManager = linearLayoutManager
     recyclerView.adapter = recyclerAdapter
     setRecommendName(view)
-    val swipeRefreshLayout = view.findViewById<androidx.swiperefreshlayout.widget.SwipeRefreshLayout>(R.id.swipeLayout)
+    val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeLayout)
     swipeRefreshLayout.setOnRefreshListener {
       Handler().postDelayed({
         swipeRefreshLayout.isRefreshing = false
@@ -61,7 +61,8 @@ class RecommendFragment : BaseFragment() {
 
   // TODO 추천 요청으로 바꿔야됨 !! SharedPreferences 활용!
   private fun getRecommendVolunteerInformation() {
-    server.getRequest().enqueue(object : Callback<List<ResponseVolunteersDTO>> {
+    showProgress("추천 봉사활동 정보 읽어오는 중...")
+    server.getRecommendRequest(App.prefs.myGender, App.prefs.myLocal).enqueue(object : Callback<List<ResponseVolunteersDTO>> {
       override fun onFailure(call: Call<List<ResponseVolunteersDTO>>, t: Throwable) {
         Log.e("fail", "봉사정보 불러오기 실패!")
         t.printStackTrace()
@@ -73,27 +74,34 @@ class RecommendFragment : BaseFragment() {
         call: Call<List<ResponseVolunteersDTO>>,
         response: Response<List<ResponseVolunteersDTO>>
       ) {
-        try {
-          val size = response.body()?.size?.minus(1)
-          val newRecommendList = ArrayList<RecommendItem>()
-          for (i in 0..size!!) {
-            newRecommendList.add(
-              RecommendItem(
-                response.body()?.get(i)?.title.toString(),
-                response.body()?.get(i)?.gender.toString(),
-                response.body()?.get(i)?.location.toString(),
-                response.body()?.get(i)?.sub_location.toString(),
-                response.body()?.get(i)?.contents.toString()
+        if (response.isSuccessful) {
+          try {
+            val size = response.body()?.size?.minus(1)
+            val newRecommendList = ArrayList<RecommendItem>()
+            for (i in 0..size!!) {
+              newRecommendList.add(
+                RecommendItem(
+                  response.body()?.get(i)?.title.toString(),
+                  response.body()?.get(i)?.gender.toString(),
+                  response.body()?.get(i)?.location.toString(),
+                  response.body()?.get(i)?.sub_location.toString(),
+                  response.body()?.get(i)?.contents.toString()
+                )
               )
-            )
+            }
+            oldRecommendList.clear()
+            oldRecommendList.addAll(newRecommendList)
+            recyclerAdapter.notifyDataSetChanged()
+          } catch (e: Exception) {
+            e.printStackTrace()
+            toast("봉사활동 추천 정보 오류")
+            getRecommendVolunteerInformation()
+          } finally {
+            hideProgress()
           }
-          oldRecommendList.clear()
-          oldRecommendList.addAll(newRecommendList)
-          recyclerAdapter.notifyDataSetChanged()
-        } catch (e: Exception) {
-          e.printStackTrace()
-          toast("봉사활동 추천 오류")
-          getRecommendVolunteerInformation()
+        } else {
+          toast("봉사활동 추천 통신 오류")
+          hideProgress()
         }
       }
     })

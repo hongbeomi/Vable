@@ -3,7 +3,7 @@ package com.capstone.vable.activity
 import android.app.ProgressDialog
 import androidx.fragment.app.Fragment
 
-open class BaseFragment : androidx.fragment.app.Fragment() {
+open class BaseFragment : Fragment() {
 
   private var dialog: ProgressDialog? = null
 
