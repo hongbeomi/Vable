@@ -9,8 +9,8 @@ object NetRetrofit {
   var retrofit = Retrofit
     .Builder()
 //    .baseUrl("http://192.168.10.212:8080")
-    .baseUrl("http://192.168.0.4:3000")
-    .addConverterFactory(ScalarsConverterFactory.create())
+    .baseUrl("http://192.168.123.106:3000")
+//    .addConverterFactory(ScalarsConverterFactory.create())
     .addConverterFactory(GsonConverterFactory.create())!!
 
 }
