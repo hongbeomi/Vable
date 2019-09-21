@@ -19,7 +19,7 @@ import com.capstone.vable.dto.ResponseVolunteersDTO
 import com.capstone.vable.preferencesdata.App
 import com.capstone.vable.service.NetRetrofit
 import com.capstone.vable.service.VolunteersService
-import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -66,7 +66,7 @@ class RecommendFragment : BaseFragment() {
       override fun onFailure(call: Call<List<ResponseVolunteersDTO>>, t: Throwable) {
         Log.e("fail", "봉사정보 불러오기 실패!")
         t.printStackTrace()
-        toast("통신 실패")
+        activity?.toast("통신 실패")
         hideProgress()
       }
 
@@ -94,13 +94,13 @@ class RecommendFragment : BaseFragment() {
             recyclerAdapter.notifyDataSetChanged()
           } catch (e: Exception) {
             e.printStackTrace()
-            toast("봉사활동 추천 정보 오류")
+            activity?.toast("봉사활동 추천 정보 오류")
             getRecommendVolunteerInformation()
           } finally {
             hideProgress()
           }
         } else {
-          toast("봉사활동 추천 통신 오류")
+          activity?.toast("봉사활동 추천 통신 오류")
           hideProgress()
         }
       }

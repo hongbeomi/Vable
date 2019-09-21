@@ -14,11 +14,6 @@ interface VolunteersService {
     @Query("title") title: String
   ): Call<List<ResponseVolunteersDTO>>
 
-//  @POST("/recommend/")
-//  fun getRecommendRequest(
-//    @Body body: ResponseVolunteersDTO
-//  ): Call<List<ResponseVolunteersDTO>>
-
   @GET("/recommend/")
   fun getRecommendRequest(
     @Query("gender") gender: String,

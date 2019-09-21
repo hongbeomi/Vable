@@ -7,10 +7,11 @@ import retrofit2.http.*
 
 interface InformationService {
 
+  @FormUrlEncoded
   @PATCH("/account/{id}/")
   fun patchTypeRequest(
     @Path("id") id: String,
-    @Body priority_volunteer: String
+    @Field("priority_volunteer") priority_volunteer: String
   ): Call<ResponseInformationDTO>
 
   @PATCH("/account/{id}/")
@@ -19,10 +20,11 @@ interface InformationService {
     @Body locationData: LocationData
   ): Call<ResponseInformationDTO>
 
-@PATCH("/account/{id}/")
-fun patchPasswordRequest(
-  @Path("id") id: String,
-  @Body password: String
-): Call<ResponseInformationDTO>
+  @FormUrlEncoded
+  @PATCH("/account/{id}/")
+  fun patchPasswordRequest(
+    @Path("id") id: String,
+    @Field("password") password: String
+  ): Call<ResponseInformationDTO>
 
 }

@@ -1,7 +1,6 @@
 package com.capstone.vable.activity
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -53,7 +52,7 @@ class LoginActivity : BaseActivity() {
 
   // 기존 로그인 정보가 있다면 지문 인식 on
   private fun fingerPrintLogin() {
-    if (App.prefs.myId != "" && App.prefs.myPass != "" && App.prefs.myFingerPrintstate) {
+    if (App.prefs.myId != "" && App.prefs.myPass != "" && App.prefs.myFingerPrintState) {
       loginLayout.visibility = View.INVISIBLE
       fingerprintLayout.visibility = View.VISIBLE
       val promptInfo = buildBiometricPrompt()

@@ -49,7 +49,7 @@ class SharedPreferences(context: Context) {
     get() = prefs?.getString(subLocal, "").toString()
     set(value) = prefs?.edit()?.putString(subLocal, value)?.apply()!!
 
-  var myFingerPrintstate: Boolean
+  var myFingerPrintState: Boolean
   get() = prefs?.getBoolean(checkFingerPrint, true)!!
   set(value) = prefs?.edit()?.putBoolean(checkFingerPrint, value)?.apply()!!
 

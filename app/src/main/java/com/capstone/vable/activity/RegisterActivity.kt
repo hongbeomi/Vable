@@ -78,7 +78,7 @@ class RegisterActivity : BaseActivity() {
     typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
       override fun onNothingSelected(parent: AdapterView<*>?) {}
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        registerInformation.priority_volunteer = typeAdapter.getItem(position)!!.toString()
+        registerInformation.type = typeAdapter.getItem(position)!!.toString()
       }
     }
   }

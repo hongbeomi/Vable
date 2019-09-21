@@ -15,8 +15,6 @@ import com.capstone.vable.preferencesdata.App
 import com.capstone.vable.service.InformationService
 import com.capstone.vable.service.NetRetrofit
 import kotlinx.android.synthetic.main.information_fragment.view.*
-import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.support.v4.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,6 +24,9 @@ import android.text.TextWatcher
 import android.widget.*
 import com.capstone.vable.activity.BaseFragment
 import com.capstone.vable.data.LocationData
+import kotlinx.android.synthetic.main.alert_password.*
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import java.security.MessageDigest
 import java.util.regex.Pattern
 
@@ -57,19 +58,19 @@ class InformationFragment : BaseFragment() {
     val logOutButton = view.findViewById<Button>(R.id.logOutButton)
     logOutButton?.setOnClickListener {
       //      informationClear()
-      toast("로그아웃되었습니다.")
-      startActivity<LoginActivity>()
+      activity?.toast("로그아웃되었습니다.")
+      activity?.startActivity<LoginActivity>()
     }
   }
 
-  private fun updateTypeInformation(view: View, type: String) {
+  private fun updateTypeInformation(view: View, priority_volunteer: String) {
     showProgress("봉사영역 변경")
-    server.patchTypeRequest(App.prefs.myKey, type)
+    server.patchTypeRequest(App.prefs.myKey, priority_volunteer)
       .enqueue(object : Callback<ResponseInformationDTO> {
         override fun onFailure(call: Call<ResponseInformationDTO>, t: Throwable) {
           Log.e("fail", "봉사종류 변경 통신 실패")
           t.printStackTrace()
-          toast("통신 실패")
+          activity?.toast("통신 실패")
           hideProgress()
         }
 
@@ -79,16 +80,16 @@ class InformationFragment : BaseFragment() {
         ) {
           if (response.isSuccessful) {
             try {
-              toast("변경되었습니다")
+              activity?.toast("변경되었습니다")
               setUserInformation(view)
             } catch (e: Exception) {
               e.printStackTrace()
-              toast("변경 실패")
+              activity?.toast("변경 실패")
             } finally {
               hideProgress()
             }
           } else {
-            toast("사용자 정보 통신 실패")
+            activity?.toast("사용자 정보 통신 실패")
             hideProgress()
           }
         }
@@ -106,7 +107,7 @@ class InformationFragment : BaseFragment() {
         override fun onFailure(call: Call<ResponseInformationDTO>, t: Throwable) {
           Log.e("fail", "지역 변경 통신 실패")
           t.printStackTrace()
-          toast("통신 실패")
+          activity?.toast("통신 실패")
           hideProgress()
         }
 
@@ -116,16 +117,16 @@ class InformationFragment : BaseFragment() {
         ) {
           if (response.isSuccessful) {
             try {
-              toast("변경되었습니다")
+              activity?.toast("변경되었습니다")
               setUserInformation(view)
             } catch (e: Exception) {
               e.printStackTrace()
-              toast("변경 실패")
+              activity?.toast("변경 실패")
             } finally {
               hideProgress()
             }
           } else {
-            toast("사용자 정보 통신 실패")
+            activity?.toast("사용자 정보 통신 실패")
             hideProgress()
           }
         }
@@ -139,7 +140,7 @@ class InformationFragment : BaseFragment() {
         override fun onFailure(call: Call<ResponseInformationDTO>, t: Throwable) {
           Log.e("fail", "비밀번호 변경 통신 실패")
           t.printStackTrace()
-          toast("통신 실패")
+          activity?.toast("통신 실패")
           hideProgress()
         }
 
@@ -149,17 +150,15 @@ class InformationFragment : BaseFragment() {
         ) {
           if (response.isSuccessful) {
             try {
-              println(response.body()?.password.toString().trim())
-              App.prefs.myPass = response.body()?.password.toString().trim()
-              toast("변경되었습니다")
+              activity?.toast("변경되었습니다")
             } catch (e: Exception) {
               e.printStackTrace()
-              toast("비밀번호 변경 실패")
+              activity?.toast("비밀번호 변경 실패")
             } finally {
               hideProgress()
             }
           } else {
-            toast("비밀번호 변경 통신 실패")
+            activity?.toast("비밀번호 변경 통신 실패")
             hideProgress()
           }
         }
@@ -187,7 +186,7 @@ class InformationFragment : BaseFragment() {
           setUserInformation(view)
           dialog?.dismiss()
         } else {
-          toast("변경 실패")
+          activity?.toast("변경 실패")
           dialog?.dismiss()
         }
       }
@@ -241,7 +240,7 @@ class InformationFragment : BaseFragment() {
           setUserInformation(view)
           dialog?.dismiss()
         } else {
-          toast("변경 실패")
+          activity?.toast("변경 실패")
           dialog?.dismiss()
         }
       }
@@ -252,9 +251,9 @@ class InformationFragment : BaseFragment() {
 
   private fun updateCheckFingerPrint(view: View) {
     val fingerPrintSwitch = view.findViewById<Switch>(R.id.fingerPrintSwitch)
-    fingerPrintSwitch.isChecked = App.prefs.myFingerPrintstate
+    fingerPrintSwitch.isChecked = App.prefs.myFingerPrintState
     fingerPrintSwitch?.setOnCheckedChangeListener { _, isChecked ->
-      App.prefs.myFingerPrintstate = isChecked
+      App.prefs.myFingerPrintState = isChecked
     }
   }
 
@@ -297,8 +296,8 @@ class InformationFragment : BaseFragment() {
             positiveButton.apply {
               isEnabled = true
               setOnClickListener {
-                App.prefs.myPass = sha256(changePasswordEditText.text.toString().trim())
-                updatePasswordInformation(App.prefs.myPass)
+                App.prefs.myPass = changePasswordEditText.text.toString().trim()
+                updatePasswordInformation(sha256(changePasswordEditText.text.toString().trim()))
                 dialog.dismiss()
               }
             }

@@ -15,13 +15,12 @@ import retrofit2.Response
 import kotlinx.android.synthetic.main.search_fragment.*
 import android.view.*
 import com.capstone.vable.R
-import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
 import com.capstone.vable.activity.BaseFragment
 import com.capstone.vable.adapter.SearchRecyclerAdapter
-import org.jetbrains.anko.support.v4.act
-import org.jetbrains.anko.support.v4.nestedScrollView
+import org.jetbrains.anko.act
 
 class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
 
@@ -56,7 +55,7 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
       override fun onFailure(call: Call<List<ResponseVolunteersDTO>>, t: Throwable) {
         Log.e("fail", "봉사정보 불러오기 실패!")
         t.printStackTrace()
-        toast("통신 실패")
+        activity?.toast("통신 실패")
         hideProgress()
       }
 
@@ -73,12 +72,12 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
             recyclerAdapter.notifyDataSetChanged()
           } catch (e: Exception) {
             e.printStackTrace()
-            toast("봉사 정보 불러오기 오류")
+            activity?.toast("봉사 정보 불러오기 오류")
           } finally {
             hideProgress()
           }
         } else {
-          toast("통신 실패")
+          activity?.toast("통신 실패")
           hideProgress()
         }
       }
@@ -92,7 +91,7 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
       override fun onFailure(call: Call<List<ResponseVolunteersDTO>>, t: Throwable) {
         Log.e("fail", "봉사정보 검색 실패!")
         t.printStackTrace()
-        toast("통신 실패")
+        activity?.toast("통신 실패")
         hideProgress()
       }
 
@@ -109,13 +108,13 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
               recyclerAdapter.notifyDataSetChanged()
             }
           } catch (e: Exception) {
-            toast("검색 결과가 존재하지 않습니다.")
+            activity?.toast("검색 결과가 존재하지 않습니다.")
             getSearchInformation()
           } finally {
             hideProgress()
           }
         } else {
-          toast("통신 실패")
+          activity?.toast("통신 실패")
           hideProgress()
         }
       }
@@ -156,7 +155,7 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
 
   // 키보드 숨기기
   private fun hideKeyboard() {
-    val hide = act.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+    val hide = activity?.act?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
     hide!!.hideSoftInputFromWindow(searchView.windowToken, 0)
   }
 
