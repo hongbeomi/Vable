@@ -6,7 +6,7 @@ import retrofit2.http.*
 
 interface VolunteersService {
 
-  @GET("/all")
+  @GET("/all/")
   fun getRequest(): Call<List<ResponseVolunteersDTO>>
 
   @GET("/search/")
@@ -16,8 +16,9 @@ interface VolunteersService {
 
   @GET("/recommend/")
   fun getRecommendRequest(
-    @Query("gender") gender: String,
-    @Query("location") location: String
+    @QueryMap option : Map<String, String>
+//    @Query("gender") gender: String,
+//    @Query("location") location: String
   ): Call<List<ResponseVolunteersDTO>>
 
 }

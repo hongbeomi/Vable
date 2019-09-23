@@ -8,7 +8,6 @@ import retrofit2.http.POST
 
 interface AccountsService {
 
-  @Headers("Content-Type: application/json")
   @POST("/account/")
   fun postRequest(
     @Body data: RegisterMemberInformation

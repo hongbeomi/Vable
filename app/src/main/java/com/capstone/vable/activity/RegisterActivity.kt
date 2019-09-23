@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import com.capstone.vable.*
 import com.capstone.vable.data.RegisterMemberInformation
 import com.capstone.vable.dto.ResponseAccountsDTO
+import com.capstone.vable.preferencesdata.App
 import com.capstone.vable.service.AccountsService
 import com.capstone.vable.service.NetRetrofit
 import kotlinx.android.synthetic.main.activity_register.*
@@ -19,7 +20,6 @@ import org.jetbrains.anko.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 import java.util.regex.Pattern
 
 class RegisterActivity : BaseActivity() {
@@ -51,19 +51,19 @@ class RegisterActivity : BaseActivity() {
         Log.e("fail", "회원정보 전송 실패")
         t.printStackTrace()
         toast("통신 실패")
+        App.prefs.myFingerPrintState = false
         hideProgress()
       }
 
-      override fun onResponse(call: Call<ResponseAccountsDTO>
-                              , response: Response<ResponseAccountsDTO>) {
-        try {
-          println(response.body()?.user_id.toString())
-        } catch (e: Exception) {
-          e.printStackTrace()
+      override fun onResponse(call: Call<ResponseAccountsDTO>,
+                              response: Response<ResponseAccountsDTO>) {
+        if (response.isSuccessful) {
+          toast("회원가입이 완료되었습니다.")
+        } else {
           toast("회원정보 저장 실패")
-        } finally {
-          hideProgress()
         }
+        hideProgress()
+        App.prefs.myFingerPrintState = false
       }
     })
   }
@@ -78,7 +78,7 @@ class RegisterActivity : BaseActivity() {
     typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
       override fun onNothingSelected(parent: AdapterView<*>?) {}
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        registerInformation.type = typeAdapter.getItem(position)!!.toString()
+        registerInformation.priority_volunteer = typeAdapter.getItem(position)!!.toString()
       }
     }
   }

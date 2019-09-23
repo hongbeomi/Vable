@@ -98,6 +98,8 @@ class LoginActivity : BaseActivity() {
         Log.e("fail", "로그인 통신 실패")
         t.printStackTrace()
         toast("통신 실패")
+        fingerprintLayout.visibility = View.INVISIBLE
+        loginLayout.visibility = View.VISIBLE
         hideProgress()
       }
 

@@ -65,8 +65,8 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
       ) {
         if (response.isSuccessful) {
           try {
-            val size = response.body()?.size?.minus(1)
-            for (i in 0..size!!) {
+//            val size = response.body()?.size?.minus(1)
+            for (i in 0..20) {
               addSearchList(i, response)
             }
             recyclerAdapter.notifyDataSetChanged()
@@ -113,7 +113,12 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
           } finally {
             hideProgress()
           }
-        } else {
+        }
+        else if (response.code() == 500) {
+          activity?.toast("검색 결과가 없습니다.")
+          hideProgress()
+        }
+        else {
           activity?.toast("통신 실패")
           hideProgress()
         }

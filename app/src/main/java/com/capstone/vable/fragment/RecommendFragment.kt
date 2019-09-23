@@ -25,6 +25,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
 
+
+
 class RecommendFragment : BaseFragment() {
 
   private var server = NetRetrofit.retrofit
@@ -62,7 +64,11 @@ class RecommendFragment : BaseFragment() {
   // TODO 추천 요청으로 바꿔야됨 !! SharedPreferences 활용!
   private fun getRecommendVolunteerInformation() {
     showProgress("추천 봉사활동 정보 읽어오는 중...")
-    server.getRecommendRequest(App.prefs.myGender, App.prefs.myLocal).enqueue(object : Callback<List<ResponseVolunteersDTO>> {
+    val map = HashMap<String, String>()
+    map["gender"] = App.prefs.myGender
+    map["location"] = App.prefs.myLocal
+
+    server.getRecommendRequest(map).enqueue(object : Callback<List<ResponseVolunteersDTO>> {
       override fun onFailure(call: Call<List<ResponseVolunteersDTO>>, t: Throwable) {
         Log.e("fail", "봉사정보 불러오기 실패!")
         t.printStackTrace()
