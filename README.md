@@ -27,3 +27,5 @@
 - diango rest framework 
 - kotlin
 - android studio
+- Retrofit2
+- OkHttp3
