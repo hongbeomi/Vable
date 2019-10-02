@@ -18,9 +18,8 @@ object NetRetrofit {
   var retrofit = Retrofit
     .Builder()
     .client(okHttpClient)
-    .baseUrl("http://192.168.10.212:8080")
-//    .baseUrl("http://172.19.147.28:8080")
+//    .baseUrl("http://192.168.10.212:8080")
+    .baseUrl("https://capstone-wisoft.ml")
     .addConverterFactory(ScalarsConverterFactory.create())
     .addConverterFactory(GsonConverterFactory.create())!!
-
 }

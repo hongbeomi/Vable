@@ -1,36 +1,71 @@
-# Vable
+## Vable
 
-> 학습을 통한 봉사활동 추천/검색 서비스 앱 프로젝트
+> Learning-based volunteer activity recommendation / search service app
 
-- 캡스톤 디자인(졸업 작품) 출품작입니다.
-- 성능 향상 후 배포 예정입니다. 
+It's a graduation work
 
-<br>
+Actually, you can't apply for volunteer work.
 
-<br>
-
-## What? 
-
- 📱 코틀린 언어로 작성한 Vable app 저장소입니다.
-
-- 구글의 머티리얼 디자인 가이드를 적용하였습니다.
-- Kotlin language
-- Word2Vec 모듈을 통해 키워드 검색 시 검색 결과 데이터가 누락되지 않도록 하였습니다.
-- 필터링 알고리즘을 통해 개개인 사용자에게 맞춤 봉사활동 정보를 제공하고자 하였습니다.
-- retrofit2 라이브러리를 통해 장고 서버와 rest api를 구현하고 데이터 양방향 통신을 구현하였습니다.
-- <u>실제 봉사활동 신청을 할 수는 없습니다.</u>
+- [한국어]()
 
 <br>
 
+## 🎯 Content
+
 <br>
 
+- **Server**
 
+![image](https://user-images.githubusercontent.com/40753104/66038541-5c94aa00-e54d-11e9-9aa4-1f9c2d16b730.png)
+
+<br>
+
+- **App**
+
+  <img src="https://user-images.githubusercontent.com/40753104/66039834-ec882300-e550-11e9-92ce-63503e7971f4.png" style="float:left" width="30%"/>                      <img src="https://user-images.githubusercontent.com/40753104/66040505-8d2b1280-e552-11e9-9f2e-dff6ef951394.png" width="37%"/>
+
+<br>
+
+## 🚀 Function
+
+- We designed this with reference to Google Material Design. And developed the app in 100% Kotlin language. 
+
+- Unlike the current volunteering web page, Similarities between words through word embedding techniques in Python's Word2Vec module were obtained, so that there were no missing results when running search services. 
+
+- We wanted to provide customized service activity information to individual users through filtering algorithms.
+- can use the Retrofit2 Library to communicate data in both directions with the Django server
+- preparing administrator web page.
+
+<br>
 
 ## 📍Stack
 
-- Diango Rest Framework 
-- Python
-- Kotlin
-- Android Studio
-- Retrofit2
-- OkHttp3
+<br>
+
+- Back-End
+
+  - Django-REST-framework
+
+  - PostgreSQL
+
+    <br>
+
+- Front-End
+  - Android Studio
+  - Vue.js - Preparing...
+  - Retrofit2
+  - OkHttp3
+
+<br>
+
+## 🎮 Demo Video
+
+- **[Youtube](https://youtu.be/SLI1QrnsAAU)**
+
+  
+
+## ✨ Contributor
+
+- Ahn hong beom - dks3963@naver.com
+- Jo eun yeob -  naramharam@naver.com
+
