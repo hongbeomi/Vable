@@ -62,10 +62,18 @@ Actually, you can't apply for volunteer work.
 
 - **[Youtube](https://youtu.be/SLI1QrnsAAU)**
 
+  <br>
+
   
 
 ## ✨ Contributor
 
 - Ahn hong beom - dks3963@naver.com
 - Jo eun yeob -  naramharam@naver.com
+
+<br>
+
+## 🏔 License
+
+- MIT License
 
