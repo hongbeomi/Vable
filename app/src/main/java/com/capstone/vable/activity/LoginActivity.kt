@@ -64,8 +64,7 @@ class LoginActivity : BaseActivity() {
   private val callback = object : BiometricPrompt.AuthenticationCallback() {
     override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
       super.onAuthenticationError(errorCode, errString)
-      if ((errorCode == ERROR_NEGATIVE_BUTTON || errorCode == ERROR_USER_CANCELED ||
-            errorCode == ERROR_TIMEOUT) && biometricPrompt != null) {
+      if (biometricPrompt != null) {
         biometricPrompt!!.cancelAuthentication()
         fingerprintLayout.visibility = View.INVISIBLE
         loginLayout.visibility = View.VISIBLE
