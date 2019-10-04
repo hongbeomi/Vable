@@ -35,3 +35,24 @@ deploy:
   file: app/build/outputs/apk/app-release.apk
   provider: releases
   skip_cleanup: true
+on:
+    repo: [REPOSITORY NAME] 
+    tags: true
+env:
+  global:
+    - NDK_VERSION=r11c
+  matrix:
+    - ANDROID_TARGET=android-22 ANDROID_ABI=armeabi-v7a GITHUB_TOKEN=__GITHUB_TOKEN__
+
+# 빌드에 사용할 스크립트입니다.
+script:
+    - ./build.sh
+
+after_success:
+    # Branch Merge & Push
+    # 아래 예제 스크립트는 test, build가 성공적으로 되었을때 특정브랜치에
+    # merge 후 push하는 예제입니다. 
+    # travis_relese Branch Merge & Push
+    - ./deploy.sh "$TRAVIS_BRANCH"
+
+sudo: false
