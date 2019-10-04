@@ -1,4 +1,4 @@
-## Vable - 바이블
+## <img src="https://user-images.githubusercontent.com/40753104/66220122-66620d00-e707-11e9-897c-147c66a6db5c.png" style="float:left" width="5%"/>Vable - 바이블
 
 > 학습기반 봉사활동 추천 / 검색서비스 앱입니다
 

@@ -1,4 +1,4 @@
-## Vable
+## <img src="https://user-images.githubusercontent.com/40753104/66220122-66620d00-e707-11e9-897c-147c66a6db5c.png" style="float:left" width="5%"/>Vable
 
 > Learning-based volunteer activity recommendation / search service app
 

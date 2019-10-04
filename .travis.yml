@@ -33,7 +33,7 @@ deploy:
   provider: releases
   api_key:
     secure: FA4ZHjMEv7cjlhsdURx2o7hMNRvtINLboRZUjQJC7DQJBUHErTEDM6FS7EiL0bNW5IiIsLi6sWNTCi3p9enI5PoEfzxVwYeAKBpRmCgCcWPMkHPzkMftiBj0aCaPmtaoBgLNpz/ZAoa6abCiOE+JFitDZp5Z/+A87DcjF/qPJ05+ckPDN0f8EAxGDHkYSCV0yNuMcKgmJuyQKeYFUClSkIYWbt80WFLRtXmug8kb1GOefoWSnc/sx8aUdSu8oo8IRcjatDy4gfXDo85AD4kayQ0w38PTIQtZQVqIL+M5l4Gv7eps6C9iyFCIrAqggw4ZqfoAwuN67T/tpY+kPNycS5dUGiQ9ganga9fEdRxKOkQOf25dbnh2aDY2do5WN5m2nS1q7vHBax09ehYApQbrrtMfa88j/8nF31pGGjwM/fRVvvOoXdFprpeqk9b4myRAexyEclWvjdIvocIxi9BEM7h5r7hiugS3exNbt5ftT3HlSHXwGNAFan2fbkniKFwn4ytcklCi5nsk5G2sND9IMoT2bz2KcapX37HPCLzj6WhFUZqLJWb2r6yG5iN/nY3f/WW/N2H2dc0HbzozDhEqLx7Mh8EByKWV/Kx3nP8bqvnqc25dk//cq1pv9V5aMzjdnSnxN6GLYWzMwJRNox1KYcIsWn4RMiMpHOHU100xF98=
-  file: VABLE_kotlin/build/outputs/apk/vable-release.apk
+  file: app/build/outputs/apk/vable*release*.apk
   file_glob: "true"
   skip_cleanup: true
   on:
