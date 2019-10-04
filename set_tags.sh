@@ -13,7 +13,6 @@ if [ "$TRAVIS_BRANCH" = "$BRANCH" ]; then
       git config --global user.email "dks3963@naver.com"
       git config --global user.name "hongbeomAhn"      
       
-      git remote set-url origin git@github.com:hongbeomi/Vable.git
       # Add tag and push to master.
       git tag -a v${TRAVIS_BUILD_NUMBER} -m "Travis build $TRAVIS_BUILD_NUMBER pushed a tag."
       git push origin --tags
