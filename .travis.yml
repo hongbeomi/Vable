@@ -8,6 +8,8 @@ android:
   components:
     - build-tools-26.0.2
     - android-26
+    - android-22
+    - andorid-24
     - add-on
     - extra
   licenses:
