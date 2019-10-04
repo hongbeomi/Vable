@@ -41,7 +41,7 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
-    repo: username/Repo
+    repo: hongbeomi/Vable
 
 after_success:
 - sh set_tags.sh
