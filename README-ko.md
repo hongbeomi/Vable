@@ -20,7 +20,7 @@
 
 - **App**
 
-  <img src="https://user-images.githubusercontent.com/40753104/66039834-ec882300-e550-11e9-92ce-63503e7971f4.png" style="float:left" width="30%"/>                      <img src="https://user-images.githubusercontent.com/40753104/66040505-8d2b1280-e552-11e9-9f2e-dff6ef951394.png" width="37%"/>
+  <img src="https://user-images.githubusercontent.com/40753104/66220949-f3f22c80-e708-11e9-86d7-80e33159bd7e.png" style="float:left" width="30%"/>                      <img src="https://user-images.githubusercontent.com/40753104/66040505-8d2b1280-e552-11e9-9f2e-dff6ef951394.png" width="37%"/>
 
 <br>
 
