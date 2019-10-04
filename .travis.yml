@@ -1,49 +1,44 @@
 dist: trusty
-
 sudo: required
-
 language: android
-
 jdk: oraclejdk8
-
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
-
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-  - $HOME/.gradle/caches/
-  - $HOME/.gradle/wrapper/
-  - $HOME/.android/build-cache
-
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+  - "$HOME/.android/build-cache"
 env:
- global:
- - ANDROID_API=28
- - ANDROID_BUILD_TOOLS=28.0.3
-
+  global:
+  - ANDROID_API=28
+  - ANDROID_BUILD_TOOLS=28.0.3
 android:
   components:
   - tools
-  - tools 
-  # Running this twice get's the latest build tools (https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI)
+  - tools
   - platform-tools
   - android-${ANDROID_API}
   - build-tools-${ANDROID_BUILD_TOOLS}
   - extra
   licenses:
-  - 'android-sdk-preview-license-52d11cd2'
-  - 'android-sdk-license-.+'
-  - 'google-gdk-license-.+'
-
+  - android-sdk-preview-license-52d11cd2
+  - android-sdk-license-.+
+  - google-gdk-license-.+
 script:
-- "./gradlew clean build connectedAndroidTest -PdisablePreDex --stacktrace"
+- ./gradlew clean build
 
 before_install:
-  - chmod +x build.sh
+- chmod +x build.sh
 
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
-
+deploy:
+  provider: releases
+  api_key:
+    secure: FA4ZHjMEv7cjlhsdURx2o7hMNRvtINLboRZUjQJC7DQJBUHErTEDM6FS7EiL0bNW5IiIsLi6sWNTCi3p9enI5PoEfzxVwYeAKBpRmCgCcWPMkHPzkMftiBj0aCaPmtaoBgLNpz/ZAoa6abCiOE+JFitDZp5Z/+A87DcjF/qPJ05+ckPDN0f8EAxGDHkYSCV0yNuMcKgmJuyQKeYFUClSkIYWbt80WFLRtXmug8kb1GOefoWSnc/sx8aUdSu8oo8IRcjatDy4gfXDo85AD4kayQ0w38PTIQtZQVqIL+M5l4Gv7eps6C9iyFCIrAqggw4ZqfoAwuN67T/tpY+kPNycS5dUGiQ9ganga9fEdRxKOkQOf25dbnh2aDY2do5WN5m2nS1q7vHBax09ehYApQbrrtMfa88j/8nF31pGGjwM/fRVvvOoXdFprpeqk9b4myRAexyEclWvjdIvocIxi9BEM7h5r7hiugS3exNbt5ftT3HlSHXwGNAFan2fbkniKFwn4ytcklCi5nsk5G2sND9IMoT2bz2KcapX37HPCLzj6WhFUZqLJWb2r6yG5iN/nY3f/WW/N2H2dc0HbzozDhEqLx7Mh8EByKWV/Kx3nP8bqvnqc25dk//cq1pv9V5aMzjdnSnxN6GLYWzMwJRNox1KYcIsWn4RMiMpHOHU100xF98=
+  file: VABLE_kotlin/build/outputs/apk/vable-release.apk
+  file_glob: "true"
+  skip_cleanup: true
+  on:
+    branch: master
+    repo: username/Repo
