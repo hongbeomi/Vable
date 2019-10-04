@@ -3,12 +3,12 @@ dist: trusty
 sudo: required
 
 language: android
+
 jdk: oraclejdk8
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
-
 
 cache:
   directories:
@@ -24,15 +24,16 @@ env:
 android:
   components:
   - tools
-  - tools # Running this twice get's the latest build tools (https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI)
+  - tools 
+  # Running this twice get's the latest build tools (https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI)
   - platform-tools
   - android-${ANDROID_API}
   - build-tools-${ANDROID_BUILD_TOOLS}
   - extra
-   licenses:
-    - 'android-sdk-preview-license-52d11cd2'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+  licenses:
+  - 'android-sdk-preview-license-52d11cd2'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
 
 script:
 - ./gradlew clean test build
