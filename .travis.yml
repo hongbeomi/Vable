@@ -36,8 +36,7 @@ android:
   - 'google-gdk-license-.+'
 
 script:
-- ./gradlew clean test build
-
+- "./gradlew clean build connectedAndroidTest -PdisablePreDex --stacktrace"
 
 before_install:
   - chmod +x build.sh
@@ -47,21 +46,4 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
-
-deploy:
-  api_key: __GITHUB_TOKEN__
-  file: app/build/outputs/apk/app-release.apk
-  provider: releases
-  skip_cleanup: true
-
-on:
-    repo: [REPOSITORY NAME] 
-    tags: true
-
-after_success:
-    # Branch Merge & Push
-    # 아래 예제 스크립트는 test, build가 성공적으로 되었을때 특정브랜치에
-    # merge 후 push하는 예제입니다. 
-    # travis_relese Branch Merge & Push
-    - ./deploy.sh "$TRAVIS_BRANCH"
 
