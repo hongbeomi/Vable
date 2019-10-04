@@ -22,6 +22,8 @@ android:
     # if you need to run emulator(s) during your tests
     - sys-img-x86-android-26
     - sys-img-armeabi-v7a-android-17
+before_install:
+  - chmod +x build.sh
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
