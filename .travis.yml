@@ -42,3 +42,6 @@ deploy:
   on:
     branch: master
     repo: username/Repo
+
+after_success:
+- sh set_tags.sh
