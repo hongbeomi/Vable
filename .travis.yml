@@ -36,11 +36,15 @@ deploy:
   api_key:
     secure: Yxg//5i8sAh5CJx0qH6Dbx9NRz/suHt9lZjxydKdzMhuqR/6QEg5RHxS9DEdnlM6TyxUCin/o6hC/BiGm1eUxA5pTba7nk8XhpxDSHIJKO2eIuXGw5mr46iyKGHR2HaRiwCtbOVmycD17KsNEVJADuhApZEJBcGPoI+KLxOKUPkTCx5EAgS55hTRtiqW9qXU1SnSbHp6JWQW1r2ohOoZj5EQuC6NJNcrc3+1UHzCrfh1c4osua9/P9b2qIOYjora8VR9BdXujBejWNTpBvKOkPJp8RWage9AfToN88SIZk0U76IC/z3dJNKzvVVjZhN5eIjLrt9+3vsOn45Sx4kbhrDGXEe7RfQtO3dgIoqIC+IBWTtTXnxbB5TldkWerqrfmjNOWwI8TukmXgJxg+ucCVCDLqf1LcQipeddBI8r+SXPJYlA5krlZG4Gvm51+6J1zakahIa6YLiaBBK3yftNIYLXHYnQjNXaVYx6hJOECkvYZmWUjPr1eVYzkIgfUtannwy7JU/bP6WGNq7OogDTTOaUtrAjzRfZ+9YeEquWD0smg+RsNCMpX9YsPiEZ+J4WaThpSkfoHHmsijVvRTlBgjqREiIhVLc7SQqqycKraroK2TTm6KYye+TeXWseWb02o1Y7errAYSNe0X3exR9VVFN5P2shOpDMe531lK9RWKY=
   file: app/build/outputs/apk/release/vable*release*.apk
-  file_glob: "true"
-  repository: git@github.com:hongbeomi/Vable.git
+  file_glob: true
   skip_cleanup: true
   on:
+    tags: true
     branch: master
 
-after_success:
-- sh set_tags.sh
+before_deploy:
+      # Set up git user name and tag this commit
+      - git config --local user.name "honbeomi"
+      - git config --local user.email "dks3963@naver.com"
+      - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+      - git tag $TRAVIS_TAG
