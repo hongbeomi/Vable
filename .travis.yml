@@ -43,7 +43,15 @@ deploy:
     branch: master
 
 before_deploy:
-      # Set up git user name and tag this commit
+      - cp $TRAVIS_BUILD_DIR/.keystore $HOME
+      - cd app/build/outputs/apk/release
+      - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME    /VableKey -storepass $storepass -keypass $keypass app-release-unsigned.apk     vableKey
+
+    # Verification
+      - jarsigner -verify app-release-unsigned.apk
+      - "${ANDROID_HOME}/build-tools/24.0.2/zipalign -v 4 app-release-unsigned    .apk VABLE.apk"
+      
+    # Set up git user name and tag this commit
       - git config --local user.name "honbeomi"
       - git config --local user.email "dks3963@naver.com"
       - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
