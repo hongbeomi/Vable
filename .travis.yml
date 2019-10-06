@@ -47,7 +47,7 @@ deploy:
 before_deploy:
       - cp $TRAVIS_BUILD_DIR/VableKey $HOME
       - cd app/build/outputs/apk/release
-      - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME /VableKey -storepass $storepass -keypass $keypass app-release-unsigned.apk vableKey
+      - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME "/VableKey" -storepass $storepass -keypass $keypass app-release-unsigned.apk vableKey
 
     # Verification
       - jarsigner -verify app-release-unsigned.apk
