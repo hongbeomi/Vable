@@ -51,7 +51,7 @@ before_deploy:
 
     # Verification
       - jarsigner -verify app-release-unsigned.apk
-      - "${ANDROID_HOME}/build-tools/24.0.2/zipalign -v 4 app-release-unsigned.apk VABLE.apk"
+      - "~/Library/Android/sdk/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk VABLE.apk"
       
     # Set up git user name and tag this commit
       - git config --local user.name "honbeomi"
