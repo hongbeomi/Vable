@@ -1,4 +1,6 @@
-## <img src="https://user-images.githubusercontent.com/40753104/66220122-66620d00-e707-11e9-897c-147c66a6db5c.png" style="float:left" width="5%"/>Vable
+## <img src="https://user-images.githubusercontent.com/40753104/66220122-66620d00-e707-11e9-897c-147c66a6db5c.png" style="float:left" width="5%"/>Vable 
+
+ ![](https://img.shields.io/github/v/release/hongbeomi/Vable?style=flat-square) [![Build Status](https://travis-ci.org/hongbeomi/Vable.svg?branch=master)](https://travis-ci.org/hongbeomi/Vable)
 
 > Learning-based volunteer activity recommendation / search service app
 
@@ -66,7 +68,7 @@ Actually, you can't apply for volunteer work.
 
 ## 🎖 Download
 
-
+[Github - (click VABLE.apk)](https://github.com/hongbeomi/Vable/releases)
 
 <br>
 
