@@ -53,8 +53,3 @@ before_deploy:
       - jarsigner -verify app-release-unsigned.apk
       - "${ANDROID_HOME}/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk VABLE.apk"
       
-    # Set up git user name and tag this commit
-    #  - git config --local user.name "honbeomi"
-    #  - git config --local user.email "dks3963@naver.com"
-    #  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
-    #  - git tag $TRAVIS_TAG
