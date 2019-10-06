@@ -1,6 +1,6 @@
 ## <img src="https://user-images.githubusercontent.com/40753104/66220122-66620d00-e707-11e9-897c-147c66a6db5c.png" style="float:left" width="5%"/>Vable - 바이블
 
- ![](https://img.shields.io/github/v/release/hongbeomi/Vable?style=flat-square) [![Build Status](https://travis-ci.org/hongbeomi/Vable.svg?branch=master)](https://travis-ci.org/hongbeomi/Vable)
+ ![](https://img.shields.io/github/v/release/hongbeomi/Vable?style=flat-square) [![Build Status](https://travis-ci.org/hongbeomi/Vable.svg?branch=master)](https://travis-ci.org/hongbeomi/Vable) ![](https://img.shields.io/github/license/hongbeomi/Vable?style=flat-square)
 
 > 학습기반 봉사활동 추천 / 검색서비스 앱입니다
 
