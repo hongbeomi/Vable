@@ -19,16 +19,19 @@ import org.jetbrains.anko.toast
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
 import com.capstone.vable.activity.BaseFragment
+import com.capstone.vable.adapter.OnItemClick
 import com.capstone.vable.adapter.SearchRecyclerAdapter
 import org.jetbrains.anko.act
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
+
+class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener, OnItemClick {
 
   private var server = NetRetrofit.retrofit
     .build()
     .create(VolunteersService::class.java)
   val searchList = arrayListOf<SearchItem>()
-  private var recyclerAdapter = SearchRecyclerAdapter(searchList)
+  private var recyclerAdapter = SearchRecyclerAdapter(searchList, this)
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?
@@ -41,11 +44,16 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
       layoutManager = linearLayoutManager
       adapter = recyclerAdapter
     }
-
     val searchView = view.findViewById<SearchView>(R.id.searchView)
     searchView?.setOnQueryTextListener(this)
     getSearchInformation()
+
     return view
+  }
+
+  override fun onClickToItem(title: String) {
+    print(title)
+//    clickItemSender(title)
   }
 
   // 봉사활동 목록 전체 검색
@@ -99,8 +107,8 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
         call: Call<List<ResponseVolunteersDTO>>,
         response: Response<List<ResponseVolunteersDTO>>
       ) {
-        if (response.isSuccessful) {
-          try {
+        when {
+          response.isSuccessful -> try {
             val size = response.body()?.size?.minus(1)
             searchList.clear()
             for (i in 0..size!!) {
@@ -113,17 +121,30 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
           } finally {
             hideProgress()
           }
-        }
-        else if (response.code() == 500) {
-          activity?.toast("검색 결과가 없습니다.")
-          hideProgress()
-        }
-        else {
-          activity?.toast("통신 실패")
-          hideProgress()
+          response.code() == 500 -> {
+            activity?.toast("검색 결과가 없습니다.")
+            hideProgress()
+          }
+          else -> {
+            activity?.toast("통신 실패")
+            hideProgress()
+          }
         }
       }
     })
+  }
+
+  // 검색한 데이터 정보 전송
+  private fun clickItemSender(title: String) {
+//    print(title)
+//    server.postClickRequest(title).enqueue(object : Callback<String> {
+//      override fun onResponse(call: Call<String>, response: Response<String>) {
+//
+//      }
+//      override fun onFailure(call: Call<String>, t: Throwable) {
+//        Log.e("통신 에러 발생", t.message)
+//      }
+//    })
   }
 
   // 검색 리스트 불러오기
@@ -137,13 +158,12 @@ class SearchFragment : BaseFragment(), SearchView.OnQueryTextListener {
         response.body()?.get(i)?.contents.toString().replace(" ", "\u00A0")
       )
     )
-    println(response.body()?.get(i)?.title.toString())
   }
 
   // 쿼리 제출 버튼 클릭 시 반응
   override fun onQueryTextSubmit(p0: String?): Boolean {
     searchList.clear()
-    println(searchView.query.toString())
+//    println(searchView.query.toString())
     getSearchVolunteerInformation(searchView.query.toString())
     hideKeyboard()
     return true

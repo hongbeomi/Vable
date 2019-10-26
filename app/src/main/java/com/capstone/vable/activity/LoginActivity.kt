@@ -77,7 +77,6 @@ class LoginActivity : BaseActivity() {
       logInPassInputEditText.setText(App.prefs.myPass)
       getCheckInformation(App.prefs.myId)
     }
-
   }
 
   // 지문 Dialog 구현

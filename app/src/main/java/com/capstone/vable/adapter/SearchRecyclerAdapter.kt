@@ -15,11 +15,16 @@ import com.capstone.vable.data.SearchItem
 import kotlinx.android.synthetic.main.search_item.view.*
 import java.util.ArrayList
 
-class SearchRecyclerAdapter(private val searchList: ArrayList<SearchItem>) :
+class SearchRecyclerAdapter(private var searchList: ArrayList<SearchItem>, listener: OnItemClick) :
   RecyclerView.Adapter<SearchRecyclerAdapter.ViewHolder>(), View.OnTouchListener {
 
   val selectedItems = SparseBooleanArray()
   var prePosition = -1
+  var callBack: OnItemClick? = null
+
+  init {
+    this.callBack = listener
+  }
 
   //아이템의 갯수
   override fun getItemCount(): Int {
@@ -33,22 +38,24 @@ class SearchRecyclerAdapter(private val searchList: ArrayList<SearchItem>) :
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    holder.itemView.searchDescriptionTextView.apply {
+    holder.itemView.searchDescriptionTextView
+      .apply {
       setOnTouchListener(this@SearchRecyclerAdapter)
       movementMethod = ScrollingMovementMethod.getInstance()
     }
     holder.bindItems(searchList[position])
+    callBack?.onClickToItem(holder.requestTitle)
   }
-
 
   inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
     private val cardView = itemView.findViewById<CardView>(R.id.searchCardView)
     private val descriptionLayout =
       itemView.findViewById<LinearLayout>(R.id.searchDescriptionLayout)
+    var requestTitle: String = ""
 
     override fun onClick(v: View?) {
-
+      requestTitle = v?.searchTitleTextView?.text.toString()
       cardView.isFocusableInTouchMode = true
       cardView.requestFocus()
       if (v!!.id == R.id.searchCardView) run {
@@ -65,6 +72,7 @@ class SearchRecyclerAdapter(private val searchList: ArrayList<SearchItem>) :
     }
 
     private fun changeVisibility(isExpanded: Boolean) {
+
       val dpValue = 300
       val d = itemView.context.resources.displayMetrics.density
       val height = (dpValue * d).toInt()
@@ -79,11 +87,11 @@ class SearchRecyclerAdapter(private val searchList: ArrayList<SearchItem>) :
           visibility = if (isExpanded) View.VISIBLE else View.GONE
         }
       }
-
       valueAnimator.start()
     }
 
     fun bindItems(data: SearchItem) {
+
       itemView.apply {
         searchTitleTextView.text = data.searchTitle
         searchGenderTextView.text = data.searchGender

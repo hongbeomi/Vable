@@ -3,7 +3,7 @@
 
     <string-array name="봉사종류">
         <item>재가봉사</item>
-        <item>지역사회</item>
+        <item>시설봉사</item>
         <item>사회봉사</item>
         <item>전문봉사</item>
         <item>기타봉사</item>

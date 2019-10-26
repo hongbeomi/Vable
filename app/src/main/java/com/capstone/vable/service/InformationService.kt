@@ -14,6 +14,7 @@ interface InformationService {
     @Field("priority_volunteer") priority_volunteer: String
   ): Call<ResponseInformationDTO>
 
+  @FormUrlEncoded
   @PATCH("/account/{id}/")
   fun patchLocalRequest(
     @Path("id") id: String,

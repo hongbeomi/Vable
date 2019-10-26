@@ -61,7 +61,6 @@ class RecommendFragment : BaseFragment() {
     getRecommendVolunteerInformation()
   }
 
-  // TODO 추천 요청으로 바꿔야됨 !! SharedPreferences 활용!
   private fun getRecommendVolunteerInformation() {
     showProgress("추천 봉사활동 정보 읽어오는 중...")
     val map = HashMap<String, String>()

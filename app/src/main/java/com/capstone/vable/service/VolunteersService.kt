@@ -21,4 +21,9 @@ interface VolunteersService {
 //    @Query("location") location: String
   ): Call<List<ResponseVolunteersDTO>>
 
+  @POST("/click/")
+  fun postClickRequest(
+    @Body title: String
+  ): Call<String>
+
 }
